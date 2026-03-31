@@ -1,0 +1,86 @@
+import { Link } from 'react-router-dom';
+import SEOHead from '@/components/SEOHead';
+import Generator from '@/components/Generator';
+import RecentStyles from '@/components/RecentStyles';
+import { ALL_SEO_PAGES } from '@/lib/seo-data';
+
+export default function HomePage() {
+  const toolSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Stylish Name Generator',
+    url: window.location.origin,
+    description: 'Generate 1000+ stylish Unicode names instantly. Copy & paste for Free Fire, PUBG, TikTok, Instagram & more.',
+    applicationCategory: 'UtilityApplication',
+    operatingSystem: 'Web',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  };
+
+  return (
+    <>
+      <SEOHead
+        title="Stylish Name Generator 2026 | 1000+ Copy & Paste Names"
+        description="Generate 1000+ stylish Unicode names instantly. Free stylish name generator for Free Fire, PUBG, TikTok, Instagram & more. Copy & paste!"
+      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
+
+      <div className="container py-10 space-y-12">
+        {/* Hero */}
+        <section className="text-center space-y-4 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold">
+            <span className="text-gradient-primary">Stylish Name</span>{' '}
+            <span className="text-foreground">Generator 2026</span>
+          </h1>
+          <p className="text-muted-foreground text-lg font-body leading-relaxed">
+            Generate 1000+ unique stylish names with fancy Unicode fonts, cool symbols, and eye-catching decorations.
+            Perfect for gaming, social media, and personal branding. Instant copy & paste!
+          </p>
+        </section>
+
+        {/* Generator */}
+        <Generator defaultInput="" />
+
+        {/* Recent */}
+        <RecentStyles />
+
+        {/* Ad sidebar placeholder (desktop) */}
+        <div className="ad-placeholder hidden lg:flex">Sidebar Ad</div>
+
+        {/* SEO Links */}
+        <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-foreground text-center">
+            Explore Stylish Name Generators
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {ALL_SEO_PAGES.slice(0, 24).map(page => (
+              <Link
+                key={page.slug}
+                to={`/${page.slug}`}
+                className="bg-card border border-border rounded-lg p-3 text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors text-center font-body"
+              >
+                {page.keyword}
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* Info */}
+        <section className="max-w-2xl mx-auto space-y-4 font-body">
+          <h2 className="text-2xl font-bold text-foreground">What is a Stylish Name Generator?</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            A stylish name generator converts your regular text into fancy Unicode font variations with decorative symbols.
+            These stylish names work on all platforms including Free Fire, PUBG Mobile, TikTok, Instagram, Facebook, YouTube,
+            WhatsApp, and Discord. Unlike regular fonts, Unicode characters are universal — they display correctly everywhere
+            without any special apps or installations.
+          </p>
+          <h2 className="text-2xl font-bold text-foreground">Why Use Stylish Names?</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Stylish names help you stand out in games and social media. A unique gaming tag can intimidate opponents in Free Fire
+            and PUBG. An aesthetic Instagram name attracts more followers. Creative Discord names make you memorable in communities.
+            Our generator creates 100+ variations instantly so you always find the perfect style.
+          </p>
+        </section>
+      </div>
+    </>
+  );
+}
