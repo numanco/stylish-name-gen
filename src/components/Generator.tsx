@@ -11,7 +11,7 @@ interface GeneratorProps {
 export default function Generator({ defaultInput = '', defaultCategory }: GeneratorProps) {
   const [input, setInput] = useState(defaultInput);
   const [category, setCategory] = useState<StyleCategory | undefined>(defaultCategory);
-  const [visibleCount, setVisibleCount] = useState(30);
+  const [visibleCount, setVisibleCount] = useState(500);
 
   const styles = useMemo(() => {
     return generateStyles(input, category);
