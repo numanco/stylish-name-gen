@@ -1,0 +1,42 @@
+import { Link } from 'react-router-dom';
+import { ALL_SEO_PAGES } from '@/lib/seo-data';
+
+export default function Footer() {
+  const featured = ALL_SEO_PAGES.slice(0, 20);
+
+  return (
+    <footer className="border-t border-border bg-card/50 mt-16">
+      <div className="container py-10">
+        <div className="grid md:grid-cols-3 gap-8 mb-8">
+          <div>
+            <h3 className="font-bold text-foreground mb-3">Gaming Names</h3>
+            <div className="space-y-1.5">
+              {featured.filter(p => ['free-fire','pubg','bgmi','gaming'].some(k => p.slug.includes(k))).map(p => (
+                <Link key={p.slug} to={`/${p.slug}`} className="block text-sm text-muted-foreground hover:text-primary transition-colors">{p.keyword}</Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-bold text-foreground mb-3">Social Media</h3>
+            <div className="space-y-1.5">
+              {featured.filter(p => ['tiktok','instagram','youtube','facebook'].some(k => p.slug.includes(k))).map(p => (
+                <Link key={p.slug} to={`/${p.slug}`} className="block text-sm text-muted-foreground hover:text-primary transition-colors">{p.keyword}</Link>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h3 className="font-bold text-foreground mb-3">Popular</h3>
+            <div className="space-y-1.5">
+              {featured.filter(p => ['boy','girl','cool','attitude','beautiful'].some(k => p.slug.includes(k))).map(p => (
+                <Link key={p.slug} to={`/${p.slug}`} className="block text-sm text-muted-foreground hover:text-primary transition-colors">{p.keyword}</Link>
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="border-t border-border pt-6 text-center text-sm text-muted-foreground">
+          © 2026 StylishName Generator. Free online stylish name maker for gaming and social media.
+        </div>
+      </div>
+    </footer>
+  );
+}
