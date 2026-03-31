@@ -130,17 +130,31 @@ export function generateStyles(text: string, category?: StyleCategory): StyledNa
       addResult(DECORATORS[i](text), category);
     }
   } else {
-    // All categories
+    // All categories — generate many more combos
     const categories = Object.keys(CATEGORY_CONFIG) as StyleCategory[];
     for (const cat of categories) {
       const config = CATEGORY_CONFIG[cat];
       for (const font of config.fonts) {
-        addResult(applyFont(text, font), cat);
-        // Add 2 decorators per font
-        const [start] = config.decoratorRange;
-        for (let i = start; i < start + 2 && i < DECORATORS.length; i++) {
-          addResult(DECORATORS[i](applyFont(text, font)), cat);
+        const styled = applyFont(text, font);
+        addResult(styled, cat);
+        // Apply ALL decorators to each font
+        for (let i = 0; i < DECORATORS.length; i++) {
+          addResult(DECORATORS[i](styled), cat);
         }
+      }
+      // Plain text with all decorators
+      for (let i = 0; i < DECORATORS.length; i++) {
+        addResult(DECORATORS[i](text), cat);
+      }
+    }
+
+    // Cross-font decorator combos for even more variety
+    const allFonts = Object.keys(FONT_MAPS);
+    for (const font of allFonts) {
+      const styled = applyFont(text, font);
+      addResult(styled, 'best');
+      for (let i = 0; i < DECORATORS.length; i++) {
+        addResult(DECORATORS[i](styled), 'fancy');
       }
     }
   }

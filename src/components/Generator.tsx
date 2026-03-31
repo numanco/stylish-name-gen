@@ -11,14 +11,14 @@ interface GeneratorProps {
 export default function Generator({ defaultInput = '', defaultCategory }: GeneratorProps) {
   const [input, setInput] = useState(defaultInput);
   const [category, setCategory] = useState<StyleCategory | undefined>(defaultCategory);
-  const [visibleCount, setVisibleCount] = useState(30);
+  const [visibleCount, setVisibleCount] = useState(500);
 
   const styles = useMemo(() => {
     return generateStyles(input, category);
   }, [input, category]);
 
   const handleLoadMore = useCallback(() => {
-    setVisibleCount(prev => prev + 30);
+    setVisibleCount(prev => prev + 200);
   }, []);
 
   const categories = getAllCategories();
@@ -30,7 +30,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
         <input
           type="text"
           value={input}
-          onChange={(e) => { setInput(e.target.value); setVisibleCount(30); }}
+          onChange={(e) => { setInput(e.target.value); setVisibleCount(500); }}
           placeholder="Type your name here..."
           maxLength={50}
           className="w-full px-5 py-4 rounded-xl bg-card border-2 border-border text-foreground text-lg font-body placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
@@ -41,7 +41,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
       {/* Categories */}
       <div className="flex flex-wrap gap-2">
         <button
-          onClick={() => { setCategory(undefined); setVisibleCount(30); }}
+          onClick={() => { setCategory(undefined); setVisibleCount(500); }}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             !category ? 'gradient-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:text-foreground'
           }`}
@@ -51,7 +51,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
         {categories.map(cat => (
           <button
             key={cat.key}
-            onClick={() => { setCategory(cat.key); setVisibleCount(30); }}
+            onClick={() => { setCategory(cat.key); setVisibleCount(500); }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               category === cat.key ? 'gradient-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:text-foreground'
             }`}
