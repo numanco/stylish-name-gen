@@ -18,7 +18,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
   }, [input, category]);
 
   const handleLoadMore = useCallback(() => {
-    setVisibleCount(prev => prev + 30);
+    setVisibleCount(prev => prev + 200);
   }, []);
 
   const categories = getAllCategories();

@@ -34,7 +34,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-border pt-6 text-center text-sm text-muted-foreground">
-          © 2026 StylishName Generator. Free online stylish name maker for gaming and social media.
+          © 2026 <a href="https://stylish-name-gen.in" className="text-primary hover:underline">stylish-name-gen.in</a> — Free online stylish name maker for gaming and social media.
         </div>
       </div>
     </footer>
