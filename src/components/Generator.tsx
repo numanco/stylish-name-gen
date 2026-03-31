@@ -51,7 +51,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
         {categories.map(cat => (
           <button
             key={cat.key}
-            onClick={() => { setCategory(cat.key); setVisibleCount(30); }}
+            onClick={() => { setCategory(cat.key); setVisibleCount(500); }}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               category === cat.key ? 'gradient-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:text-foreground'
             }`}
