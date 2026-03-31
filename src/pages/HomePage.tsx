@@ -38,7 +38,7 @@ export default function HomePage() {
         </section>
 
         {/* Generator */}
-        <Generator defaultInput="" />
+        <Generator defaultInput="YourName" />
 
         {/* Recent */}
         <RecentStyles />
