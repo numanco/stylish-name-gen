@@ -41,7 +41,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
       {/* Categories */}
       <div className="flex flex-wrap gap-2">
         <button
-          onClick={() => { setCategory(undefined); setVisibleCount(30); }}
+          onClick={() => { setCategory(undefined); setVisibleCount(500); }}
           className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             !category ? 'gradient-primary text-primary-foreground' : 'bg-muted text-muted-foreground hover:text-foreground'
           }`}
