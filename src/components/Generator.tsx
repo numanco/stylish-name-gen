@@ -30,7 +30,7 @@ export default function Generator({ defaultInput = '', defaultCategory }: Genera
         <input
           type="text"
           value={input}
-          onChange={(e) => { setInput(e.target.value); setVisibleCount(30); }}
+          onChange={(e) => { setInput(e.target.value); setVisibleCount(500); }}
           placeholder="Type your name here..."
           maxLength={50}
           className="w-full px-5 py-4 rounded-xl bg-card border-2 border-border text-foreground text-lg font-body placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all"
