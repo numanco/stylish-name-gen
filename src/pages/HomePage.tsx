@@ -21,6 +21,7 @@ export default function HomePage() {
       <SEOHead
         title="Stylish Name Generator 2026 | 1000+ Copy & Paste Names"
         description="Generate 1000+ stylish Unicode names instantly. Free stylish name generator for Free Fire, PUBG, TikTok, Instagram & more. Copy & paste!"
+        path="/"
       />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(toolSchema) }} />
 
