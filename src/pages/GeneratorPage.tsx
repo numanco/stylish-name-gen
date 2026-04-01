@@ -8,6 +8,7 @@ export default function GeneratorPage() {
       <SEOHead
         title="Stylish Name Generator | Free Online Tool 2026"
         description="Free stylish name generator with 1000+ Unicode variations. Create fancy, cool, gaming, and aesthetic names. Copy & paste instantly!"
+        path="/generator"
       />
       <div className="container py-10 space-y-10">
         <section className="text-center space-y-3 max-w-2xl mx-auto">
