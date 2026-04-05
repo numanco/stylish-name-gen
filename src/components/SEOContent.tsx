@@ -1,5 +1,6 @@
 import type { SEOPageData } from '@/lib/seo-data';
 import { getRelatedPages } from '@/lib/seo-data';
+import { getSEOImage } from '@/lib/seo-images';
 import { Link } from 'react-router-dom';
 
 interface SEOContentProps {
@@ -9,7 +10,6 @@ interface SEOContentProps {
 export default function SEOContent({ page }: SEOContentProps) {
   const related = getRelatedPages(page.slug);
 
-  // FAQ JSON-LD
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -70,24 +70,34 @@ export default function SEOContent({ page }: SEOContentProps) {
         </div>
       </section>
 
-      {/* Ad placeholder */}
-      <div className="ad-placeholder">Advertisement</div>
-
-      {/* Related Pages */}
+      {/* Related Pages with images */}
       <section>
         <h2 className="text-2xl font-bold text-foreground mb-4">
           Related Generators
         </h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-          {related.map(p => (
-            <Link
-              key={p.slug}
-              to={`/${p.slug}`}
-              className="bg-card border border-border rounded-lg p-3 text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
-            >
-              {p.keyword}
-            </Link>
-          ))}
+          {related.map(p => {
+            const img = getSEOImage(p.slug);
+            return (
+              <Link
+                key={p.slug}
+                to={`/${p.slug}`}
+                className="bg-card border border-border rounded-lg overflow-hidden text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+              >
+                {img && (
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    width={400}
+                    height={300}
+                    loading="lazy"
+                    className="w-full h-24 object-cover"
+                  />
+                )}
+                <span className="block p-3">{p.keyword}</span>
+              </Link>
+            );
+          })}
         </div>
       </section>
     </div>
