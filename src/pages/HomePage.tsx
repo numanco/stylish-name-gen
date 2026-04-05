@@ -3,7 +3,7 @@ import SEOHead from '@/components/SEOHead';
 import Generator from '@/components/Generator';
 import RecentStyles from '@/components/RecentStyles';
 import { ALL_SEO_PAGES } from '@/lib/seo-data';
-import { heroImg, heroAlt } from '@/lib/seo-images';
+import { heroImg, heroAlt, stylishBioImg, bioAlt } from '@/lib/seo-images';
 
 export default function HomePage() {
   const schemas = [
@@ -111,6 +111,14 @@ export default function HomePage() {
 
         {/* Info */}
         <section className="max-w-2xl mx-auto space-y-4 font-body">
+          <img
+            src={stylishBioImg}
+            alt={bioAlt}
+            width={800}
+            height={800}
+            loading="lazy"
+            className="rounded-xl border border-border mx-auto w-full max-w-lg"
+          />
           <h2 className="text-2xl font-bold text-foreground">What is a Stylish Name Generator?</h2>
           <p className="text-muted-foreground leading-relaxed">
             A stylish name generator converts your regular text into fancy Unicode font variations with decorative symbols.
