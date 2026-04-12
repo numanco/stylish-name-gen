@@ -20,12 +20,22 @@ export default function SEOContent({ page }: SEOContentProps) {
     })),
   };
 
+  const howToSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: `How to Create ${page.keyword}`,
+    description: page.intro,
+    step: page.steps.map((step, i) => ({
+      '@type': 'HowToStep',
+      position: i + 1,
+      text: step,
+    })),
+  };
+
   return (
     <div className="space-y-10 font-body">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />
 
       {/* Top Names Section */}
       <section>
@@ -33,8 +43,10 @@ export default function SEOContent({ page }: SEOContentProps) {
           Top {page.keyword}s
         </h2>
         <p className="text-muted-foreground leading-relaxed">
-          Use the generator above to create your own unique {page.keyword.toLowerCase()} variations.
-          Each style uses Unicode characters that work on all platforms and devices.
+          Use the <Link to="/generator" className="text-primary hover:underline">generator</Link> above to create your own unique {page.keyword.toLowerCase()} variations.
+          Each style uses{' '}
+          <a href="https://home.unicode.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Unicode</a>{' '}
+          characters that work on all platforms and devices.
         </p>
       </section>
 
@@ -100,6 +112,13 @@ export default function SEOContent({ page }: SEOContentProps) {
           })}
         </div>
       </section>
+
+      {/* Back to home link */}
+      <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
+        <Link to="/" className="text-primary hover:underline">← Back to Stylish Name Generator</Link>
+        {' · '}
+        <Link to="/generator" className="text-primary hover:underline">Try Generator Tool</Link>
+      </nav>
     </div>
   );
 }

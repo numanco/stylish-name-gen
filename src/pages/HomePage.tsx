@@ -73,7 +73,7 @@ export default function HomePage() {
           </h1>
           <p className="text-muted-foreground text-lg font-body leading-relaxed">
             Generate 1000+ unique stylish names with fancy Unicode fonts, cool symbols, and eye-catching decorations.
-            Perfect for gaming, social media, and personal branding. Instant copy & paste!
+            Perfect for gaming, social media, and personal branding. Instant copy &amp; paste!
           </p>
           <img
             src={heroImg}
@@ -91,7 +91,7 @@ export default function HomePage() {
         {/* Recent */}
         <RecentStyles />
 
-        {/* SEO Links */}
+        {/* Internal Links — SEO Pages */}
         <section className="space-y-6">
           <h2 className="text-2xl font-bold text-foreground text-center">
             Explore Stylish Name Generators
@@ -109,8 +109,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Info */}
-        <section className="max-w-2xl mx-auto space-y-4 font-body">
+        {/* Info + external links */}
+        <section className="max-w-2xl mx-auto space-y-6 font-body">
           <img
             src={stylishBioImg}
             alt={bioAlt}
@@ -121,17 +121,56 @@ export default function HomePage() {
           />
           <h2 className="text-2xl font-bold text-foreground">What is a Stylish Name Generator?</h2>
           <p className="text-muted-foreground leading-relaxed">
-            A stylish name generator converts your regular text into fancy Unicode font variations with decorative symbols.
-            These stylish names work on all platforms including Free Fire, PUBG Mobile, TikTok, Instagram, Facebook, YouTube,
-            WhatsApp, and Discord. Unlike regular fonts, Unicode characters are universal — they display correctly everywhere
+            A stylish name generator converts your regular text into fancy{' '}
+            <a href="https://home.unicode.org/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Unicode</a>{' '}
+            font variations with decorative symbols.
+            These stylish names work on all platforms including{' '}
+            <Link to="/free-fire-stylish-name" className="text-primary hover:underline">Free Fire</Link>,{' '}
+            <Link to="/pubg-stylish-name" className="text-primary hover:underline">PUBG Mobile</Link>,{' '}
+            <Link to="/tiktok-stylish-name" className="text-primary hover:underline">TikTok</Link>,{' '}
+            <Link to="/instagram-stylish-name" className="text-primary hover:underline">Instagram</Link>,{' '}
+            Facebook, YouTube, WhatsApp, and Discord. Unlike regular fonts, Unicode characters are universal — they display correctly everywhere
             without any special apps or installations.
           </p>
+
           <h2 className="text-2xl font-bold text-foreground">Why Use Stylish Names?</h2>
           <p className="text-muted-foreground leading-relaxed">
-            Stylish names help you stand out in games and social media. A unique gaming tag can intimidate opponents in Free Fire
-            and PUBG. An aesthetic Instagram name attracts more followers. Creative Discord names make you memorable in communities.
-            Our generator creates 100+ variations instantly so you always find the perfect style.
+            Stylish names help you stand out in games and social media. A unique gaming tag can intimidate opponents in{' '}
+            <Link to="/free-fire-stylish-name" className="text-primary hover:underline">Free Fire</Link> and{' '}
+            <Link to="/pubg-stylish-name" className="text-primary hover:underline">PUBG</Link>. An aesthetic{' '}
+            <Link to="/instagram-stylish-name" className="text-primary hover:underline">Instagram name</Link> attracts more followers. Creative{' '}
+            Discord names make you memorable in communities.
+            Our <Link to="/generator" className="text-primary hover:underline">generator</Link> creates 1000+ variations instantly so you always find the perfect style.
           </p>
+
+          <h2 className="text-2xl font-bold text-foreground">How Does It Work?</h2>
+          <p className="text-muted-foreground leading-relaxed">
+            Our tool uses the{' '}
+            <a href="https://en.wikipedia.org/wiki/Unicode" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Unicode standard</a>{' '}
+            to transform text into mathematical bold, italic, script, fraktur, double-struck, and other font styles.
+            Combined with decorative symbols and emoji borders, it produces thousands of unique name variations.
+            All generated names are fully compatible with{' '}
+            <a href="https://en.wikipedia.org/wiki/UTF-8" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">UTF-8</a>{' '}
+            encoding used by all modern apps and platforms.
+          </p>
+        </section>
+
+        {/* More internal links */}
+        <section className="space-y-4">
+          <h2 className="text-2xl font-bold text-foreground text-center">
+            Browse by Category
+          </h2>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {ALL_SEO_PAGES.slice(24, 48).map(page => (
+              <Link
+                key={page.slug}
+                to={`/${page.slug}`}
+                className="bg-card border border-border rounded-lg p-3 text-sm text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors text-center font-body"
+              >
+                {page.keyword}
+              </Link>
+            ))}
+          </div>
         </section>
       </div>
     </>
