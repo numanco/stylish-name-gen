@@ -138,14 +138,14 @@ export interface StyledName {
 export type StyleCategory = 'best' | 'gaming' | 'cool' | 'cute' | 'aesthetic' | 'symbols' | 'fancy' | 'small';
 
 const CATEGORY_CONFIG: Record<StyleCategory, { fonts: string[]; decoratorRange: [number, number] }> = {
-  best: { fonts: ['boldScript', 'doubleStruck', 'bold', 'italic', 'fraktur'], decoratorRange: [0, 10] },
-  gaming: { fonts: ['bold', 'sansSerifBold', 'boldFraktur', 'monospace', 'fullwidth'], decoratorRange: [0, 15] },
-  cool: { fonts: ['boldScript', 'fraktur', 'sansSerifBold', 'boldItalic'], decoratorRange: [5, 20] },
-  cute: { fonts: ['script', 'circled', 'parenthesized', 'italic'], decoratorRange: [20, 30] },
-  aesthetic: { fonts: ['doubleStruck', 'sansSerifItalic', 'monospace', 'script'], decoratorRange: [15, 25] },
-  symbols: { fonts: ['bold', 'negCircled', 'squared', 'circled'], decoratorRange: [25, 40] },
-  fancy: { fonts: ['boldScript', 'script', 'boldItalic', 'fraktur', 'boldFraktur'], decoratorRange: [0, 20] },
-  small: { fonts: ['smallCaps', 'superscript', 'inverted'], decoratorRange: [30, 40] },
+  best: { fonts: ['boldScript', 'doubleStruck', 'bold', 'italic', 'fraktur'], decoratorRange: [0, 20] },
+  gaming: { fonts: ['bold', 'sansSerifBold', 'boldFraktur', 'monospace', 'fullwidth'], decoratorRange: [0, 30] },
+  cool: { fonts: ['boldScript', 'fraktur', 'sansSerifBold', 'boldItalic'], decoratorRange: [10, 40] },
+  cute: { fonts: ['script', 'circled', 'parenthesized', 'italic'], decoratorRange: [35, 55] },
+  aesthetic: { fonts: ['doubleStruck', 'sansSerifItalic', 'monospace', 'script'], decoratorRange: [30, 50] },
+  symbols: { fonts: ['bold', 'negCircled', 'squared', 'circled'], decoratorRange: [50, 80] },
+  fancy: { fonts: ['boldScript', 'script', 'boldItalic', 'fraktur', 'boldFraktur'], decoratorRange: [0, 40] },
+  small: { fonts: ['smallCaps', 'superscript', 'inverted'], decoratorRange: [60, 90] },
 };
 
 export function generateStyles(text: string, category?: StyleCategory): StyledName[] {
