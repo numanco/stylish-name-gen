@@ -22,9 +22,28 @@ const FONT_MAPS: Record<string, string> = {
   superscript: 'ᴬᴮᶜᴰᴱᶠᴳᴴᴵᴶᴷᴸᴹᴺᴼᴾQᴿˢᵀᵁⱽᵂˣʸᶻᵃᵇᶜᵈᵉᶠᵍʰⁱʲᵏˡᵐⁿᵒᵖqʳˢᵗᵘᵛʷˣʸᶻ⁰¹²³⁴⁵⁶⁷⁸⁹',
   inverted: 'ɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎzɐqɔpǝɟƃɥᴉɾʞlɯuodbɹsʇnʌʍxʎz0123456789',
   parenthesized: '⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵⒜⒝⒞⒟⒠⒡⒢⒣⒤⒥⒦⒧⒨⒩⒪⒫⒬⒭⒮⒯⒰⒱⒲⒳⒴⒵0123456789',
+  // NEW: Strikethrough (combining characters)
+  strikethrough: 'strikethrough',
+  // NEW: Underline (combining characters)
+  underline: 'underline',
+  // NEW: Wavy/Tilde (combining characters)
+  wavy: 'wavy',
 };
 
+// Combining character modifiers
+const COMBINING_STRIKETHROUGH = '\u0336';
+const COMBINING_UNDERLINE = '\u0332';
+const COMBINING_TILDE = '\u0330';
+
+function applyCombining(text: string, combiner: string): string {
+  return [...text].map(ch => ch + combiner).join('');
+}
+
 function applyFont(text: string, fontKey: string): string {
+  if (fontKey === 'strikethrough') return applyCombining(text, COMBINING_STRIKETHROUGH);
+  if (fontKey === 'underline') return applyCombining(text, COMBINING_UNDERLINE);
+  if (fontKey === 'wavy') return applyCombining(text, COMBINING_TILDE);
+
   const map = FONT_MAPS[fontKey];
   if (!map) return text;
   const chars = [...map];
@@ -138,77 +157,98 @@ export interface StyledName {
 export type StyleCategory = 'best' | 'gaming' | 'cool' | 'cute' | 'aesthetic' | 'symbols' | 'fancy' | 'small';
 
 const CATEGORY_CONFIG: Record<StyleCategory, { fonts: string[]; decoratorRange: [number, number] }> = {
-  best: { fonts: ['boldScript', 'doubleStruck', 'bold', 'italic', 'fraktur'], decoratorRange: [0, 20] },
-  gaming: { fonts: ['bold', 'sansSerifBold', 'boldFraktur', 'monospace', 'fullwidth'], decoratorRange: [0, 30] },
-  cool: { fonts: ['boldScript', 'fraktur', 'sansSerifBold', 'boldItalic'], decoratorRange: [10, 40] },
-  cute: { fonts: ['script', 'circled', 'parenthesized', 'italic'], decoratorRange: [35, 55] },
-  aesthetic: { fonts: ['doubleStruck', 'sansSerifItalic', 'monospace', 'script'], decoratorRange: [30, 50] },
-  symbols: { fonts: ['bold', 'negCircled', 'squared', 'circled'], decoratorRange: [50, 80] },
-  fancy: { fonts: ['boldScript', 'script', 'boldItalic', 'fraktur', 'boldFraktur'], decoratorRange: [0, 40] },
-  small: { fonts: ['smallCaps', 'superscript', 'inverted'], decoratorRange: [60, 90] },
+  best: { fonts: ['boldScript', 'doubleStruck', 'bold', 'italic', 'fraktur', 'strikethrough'], decoratorRange: [0, 20] },
+  gaming: { fonts: ['bold', 'sansSerifBold', 'boldFraktur', 'monospace', 'fullwidth', 'strikethrough'], decoratorRange: [0, 30] },
+  cool: { fonts: ['boldScript', 'fraktur', 'sansSerifBold', 'boldItalic', 'underline', 'wavy'], decoratorRange: [10, 40] },
+  cute: { fonts: ['script', 'circled', 'parenthesized', 'italic', 'wavy'], decoratorRange: [35, 55] },
+  aesthetic: { fonts: ['doubleStruck', 'sansSerifItalic', 'monospace', 'script', 'underline'], decoratorRange: [30, 50] },
+  symbols: { fonts: ['bold', 'negCircled', 'squared', 'circled', 'strikethrough'], decoratorRange: [50, 80] },
+  fancy: { fonts: ['boldScript', 'script', 'boldItalic', 'fraktur', 'boldFraktur', 'wavy', 'underline'], decoratorRange: [0, 40] },
+  small: { fonts: ['smallCaps', 'superscript', 'inverted', 'strikethrough', 'underline'], decoratorRange: [60, 90] },
 };
 
-export function generateStyles(text: string, category?: StyleCategory): StyledName[] {
-  if (!text.trim()) return [];
-  const results: StyledName[] = [];
+// Lazy generation: yields results one at a time
+export function* generateStylesLazy(text: string, category?: StyleCategory): Generator<StyledName> {
+  if (!text.trim()) return;
   const seen = new Set<string>();
+  let count = 0;
 
-  const addResult = (styled: string, cat: string) => {
+  const emit = (styled: string, cat: string): StyledName | null => {
     if (!seen.has(styled)) {
       seen.add(styled);
-      results.push({ text: styled, category: cat, id: `${cat}-${results.length}` });
+      return { text: styled, category: cat, id: `${cat}-${count++}` };
     }
+    return null;
   };
 
   if (category) {
     const config = CATEGORY_CONFIG[category];
-    // Plain font variants
     for (const font of config.fonts) {
-      addResult(applyFont(text, font), category);
+      const r = emit(applyFont(text, font), category);
+      if (r) yield r;
     }
-    // Font + decorator combos
     const [start, end] = config.decoratorRange;
     for (const font of config.fonts) {
       const styled = applyFont(text, font);
       for (let i = start; i < Math.min(end, DECORATORS.length); i++) {
-        addResult(DECORATORS[i](styled), category);
+        const r = emit(DECORATORS[i](styled), category);
+        if (r) yield r;
       }
     }
-    // Plain decorators
     for (let i = start; i < Math.min(end, DECORATORS.length); i++) {
-      addResult(DECORATORS[i](text), category);
+      const r = emit(DECORATORS[i](text), category);
+      if (r) yield r;
     }
   } else {
-    // All categories — generate many more combos
     const categories = Object.keys(CATEGORY_CONFIG) as StyleCategory[];
     for (const cat of categories) {
       const config = CATEGORY_CONFIG[cat];
       for (const font of config.fonts) {
         const styled = applyFont(text, font);
-        addResult(styled, cat);
-        // Apply ALL decorators to each font
+        const r = emit(styled, cat);
+        if (r) yield r;
         for (let i = 0; i < DECORATORS.length; i++) {
-          addResult(DECORATORS[i](styled), cat);
+          const r2 = emit(DECORATORS[i](styled), cat);
+          if (r2) yield r2;
         }
       }
-      // Plain text with all decorators
       for (let i = 0; i < DECORATORS.length; i++) {
-        addResult(DECORATORS[i](text), cat);
+        const r = emit(DECORATORS[i](text), cat);
+        if (r) yield r;
       }
     }
-
-    // Cross-font decorator combos for even more variety
-    const allFonts = Object.keys(FONT_MAPS);
+    const allFonts = Object.keys(FONT_MAPS).filter(f => f !== 'strikethrough' && f !== 'underline' && f !== 'wavy');
     for (const font of allFonts) {
       const styled = applyFont(text, font);
-      addResult(styled, 'best');
+      const r = emit(styled, 'best');
+      if (r) yield r;
       for (let i = 0; i < DECORATORS.length; i++) {
-        addResult(DECORATORS[i](styled), 'fancy');
+        const r2 = emit(DECORATORS[i](styled), 'fancy');
+        if (r2) yield r2;
       }
     }
   }
+}
 
-  return results;
+// Generate only the first N styles (for initial render)
+export function generateStylesBatch(text: string, count: number, category?: StyleCategory): { styles: StyledName[]; hasMore: boolean } {
+  const gen = generateStylesLazy(text, category);
+  const styles: StyledName[] = [];
+  for (const s of gen) {
+    styles.push(s);
+    if (styles.length >= count) {
+      // Check if there's at least one more
+      const next = gen.next();
+      return { styles, hasMore: !next.done };
+    }
+  }
+  return { styles, hasMore: false };
+}
+
+// Legacy: generate all (used for total count display)
+export function generateStyles(text: string, category?: StyleCategory): StyledName[] {
+  const gen = generateStylesLazy(text, category);
+  return [...gen];
 }
 
 export function getAllCategories(): { key: StyleCategory; label: string; icon: string }[] {

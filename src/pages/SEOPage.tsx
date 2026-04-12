@@ -14,19 +14,31 @@ export default function SEOPage() {
 
   const image = getSEOImage(page.slug);
 
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://stylish-name-gen.in' },
-      { '@type': 'ListItem', position: 2, name: page.keyword, item: `https://stylish-name-gen.in/${page.slug}` },
-    ],
-  };
+  const schemas = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://stylish-name-gen.in' },
+        { '@type': 'ListItem', position: 2, name: page.keyword, item: `https://stylish-name-gen.in/${page.slug}` },
+      ],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: page.title,
+      description: page.metaDescription,
+      url: `https://stylish-name-gen.in/${page.slug}`,
+      isPartOf: { '@type': 'WebSite', name: 'Stylish Name Generator', url: 'https://stylish-name-gen.in' },
+    },
+  ];
 
   return (
     <>
       <SEOHead title={page.title} description={page.metaDescription} path={`/${page.slug}`} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {schemas.map((s, i) => (
+        <script key={i} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(s) }} />
+      ))}
 
       <div className="container py-10 space-y-10">
         <section className="text-center space-y-3 max-w-2xl mx-auto">
