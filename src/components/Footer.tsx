@@ -37,6 +37,7 @@ export default function Footer() {
             <nav aria-label="Quick links" className="space-y-1.5">
               <Link to="/" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Home</Link>
               <Link to="/generator" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Generator Tool</Link>
+              <Link to="/sitemap" className="block text-sm text-muted-foreground hover:text-primary transition-colors">All Generators</Link>
               <a href="https://home.unicode.org/" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Unicode.org ↗</a>
               <a href="https://en.wikipedia.org/wiki/Unicode_font" target="_blank" rel="noopener noreferrer" className="block text-sm text-muted-foreground hover:text-primary transition-colors">About Unicode Fonts ↗</a>
             </nav>
