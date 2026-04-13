@@ -10,7 +10,7 @@ const seoSource = fs.readFileSync(seoDataPath, 'utf8');
 const staticSlugs = [...seoSource.matchAll(/slug:\s*'([^']+)'/g)].map((match) => match[1]);
 const alphabetSlugs = 'abcdefghijklmnopqrstuvwxyz'.split('').map((letter) => `${letter}-stylish-name`);
 
-const routes = ['/', '/generator', ...new Set([...staticSlugs, ...alphabetSlugs]).values()].map((route) =>
+const routes = ['/', '/generator', '/sitemap', ...new Set([...staticSlugs, ...alphabetSlugs]).values()].map((route) =>
   route === '/' ? SITE_URL : `${SITE_URL}/${route}`.replace(/([^:]\/)\/+/, '$1')
 );
 
