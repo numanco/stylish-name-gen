@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import HomePage from "@/pages/HomePage";
 import GeneratorPage from "@/pages/GeneratorPage";
 import SEOPage from "@/pages/SEOPage";
+import SitemapPage from "@/pages/SitemapPage";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/generator" element={<GeneratorPage />} />
+              <Route path="/sitemap" element={<SitemapPage />} />
               <Route path="/:slug" element={<SEOPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
